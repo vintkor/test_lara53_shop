@@ -89,5 +89,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&callback=initMap" async defer></script>
 </body>
 </html>
