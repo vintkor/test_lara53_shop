@@ -55,17 +55,21 @@
                             <li><a href="{{ url('/login') }}">Login</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
-                            <li class="dropdown">
+                            <li class="dropdown" style="position: relative">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <img src="../images/user/{{ Auth::user()->img }}" alt="{{ Auth::user()->name }}" style="width: 50px; height: 50px; border-radius: 50%; position: absolute; left: -50px; top: 5px;">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ route('profile') }}">
+                                            <i class="fa fa-user" aria-hidden="true"></i> Профиль
+                                        </a>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i> Выйти
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">

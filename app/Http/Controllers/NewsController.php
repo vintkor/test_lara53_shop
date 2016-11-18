@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use SEOMeta;
 use Image;
+use Storage;
 
 class NewsController extends Controller
 {
@@ -49,10 +50,21 @@ class NewsController extends Controller
     {
         $slug = str_slug($request->title, '_');
 
-//        if($request->hasFile('img'))
-//        {
-//            dd($request);
-//        }
+        if($request->hasFile('img'))
+        {
+            $img = $request->file('img');
+            $filename = 'news-' . $slug . '-' . time() . '.' . $img->getClientOriginalExtension();
+
+            $thumb_path = public_path('images/news/thumb/' . $filename);
+            $full_path = public_path('images/news/full/' . $filename);
+
+            Image::make($img->getRealPath())->fit(200, 200)->save($thumb_path);
+            Image::make($img->getRealPath())->save($full_path);
+        }
+        else
+        {
+            $filename = 'default.png';
+        }
 
         DB::table('News')->insert([
             'title'         => $request->title,
@@ -60,6 +72,7 @@ class NewsController extends Controller
             'description'   => $request->description,
             'keywords'      => $request->keywords,
             'text'          => $request->text,
+            'img'           => $filename,
         ]);
 
         return redirect()->route('news');
@@ -67,12 +80,18 @@ class NewsController extends Controller
 
     /*
      *
-     * DELETE news
+     * DELETE удаление новости и её изображений
      *
      * */
     public function delete($id){
 
-        DB::table('News')->where('id', $id)->delete();
+        $post = DB::table('News')->where('id', $id);
+
+        $thumb_path = 'images/news/thumb/' . $post->value('img');
+        $full_path  = 'images/news/full/' . $post->value('img');
+
+        Storage::disk('public')->delete([$thumb_path, $full_path]);
+        $post->delete();
 
         return redirect()->route('news');
 

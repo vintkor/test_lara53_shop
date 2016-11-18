@@ -16,6 +16,11 @@ Auth::routes();
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::get('/home', 'HomeController@index');
 
+/*================= Пользователь ===============*/
+
+Route::get('/profile', ['as' => 'profile', 'uses' => 'UserController@index']);
+Route::post('/profile', 'UserController@update_profile');
+
 /*================= Новости ===============*/
 
 Route::get('/news',                ['as' => 'news',        'uses' => 'NewsController@index']);

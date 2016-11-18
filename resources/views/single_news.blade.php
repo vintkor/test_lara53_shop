@@ -13,6 +13,8 @@
                     <h1>{{ $news->title }}</h1>
                 </div>
                 <div class="panel-body">
+                    <img src="../images/news/full/{{ $news->img }}" alt="{{ $news->title }}" class="img-responsive" style="margin: 0 auto">
+                    <hr>
                     {!! $news->text !!}
                 </div>
                 <div class="panel-footer">

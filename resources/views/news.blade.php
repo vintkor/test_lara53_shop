@@ -16,7 +16,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-2">
-                            <img src="../images/news/{{ $news->img }}" alt="{{ $news->title }}" class="img-responsive thumbnail">
+                            <img src="../images/news/thumb/{{ $news->img }}" alt="{{ $news->title }}" class="img-responsive thumbnail">
                         </div>
                         <div class="col-md-10">
                             {{ str_limit( strip_tags($news->text), 600) }}
