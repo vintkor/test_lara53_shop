@@ -28,3 +28,7 @@ Route::get('/news/{slug}',         ['as' => 'single_news', 'uses' => 'NewsContro
 Route::post('/add_news',           ['as' => 'add_news',    'uses' => 'NewsController@create']);
 Route::delete('/delete_news/{id}', ['as' => 'delete_news', 'uses' => 'NewsController@delete']);
 
+/*================= Новости ===============*/
+
+Route::post('/add_marker', ['as' => 'add_marker', 'uses' => 'MarkerController@add_marker']);
+

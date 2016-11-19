@@ -20,6 +20,8 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <script   src="https://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&libraries=places" async defer></script>
 </head>
 <body>
     <div id="app">
@@ -89,6 +91,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&callback=initMap" async defer></script>
+
 </body>
 </html>
