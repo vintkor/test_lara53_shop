@@ -25,9 +25,6 @@ class HomeController extends Controller
     public function index()
     {
         $data = DB::table('markers')->get();
-
-        // dd(json_encode($data));
-
-        return view('home', ['data' => $data]);
+        return view('home', ['markers' => $data]);
     }
 }

@@ -9,7 +9,9 @@ class MarkerController extends Controller
 {
     public function add_marker(Request $request)
     {
-    	$content = '<div id="content"><div id="siteNotice"></div><h1 id="firstHeading" class="firstHeading">Заголовок</h1><div id="bodyContent"><p><i class="fa fa-phone" aria-hidden="true"></i> '
+    	$content = '<div id="content"><div id="siteNotice"></div><h1 id="firstHeading" class="firstHeading">'
+            . $request->title 
+            . '</h1><div id="bodyContent"><p><i class="fa fa-phone" aria-hidden="true"></i> '
     		. $request->string_1
     		. '</p><p><i class="fa fa-phone" aria-hidden="true"></i> '
     		. $request->string_2

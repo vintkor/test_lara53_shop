@@ -22,8 +22,34 @@
                 Все маркеры
             </div>
             <div class="panel-body">
-                <div class="col-md-12">
+                <div class="col-md-9">
                     <div id="map"></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel-group acc-v1" id="accordion-1">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#collapse-764" aria-expanded="true">Славутич</a>
+                          </h4>
+                        </div>
+                        <div id="collapse-764" class="panel-collapse collapse" aria-expanded="true">
+                          <div class="panel-body">
+                          
+                          @foreach ($markers as $marker)
+                            <div class="row">
+                              <div class="col-md-12">
+                                <a href="#" data-id="{{ $marker->id }}" class="map-link">
+                                  {{ $marker->inner_title }}
+                                </a>
+                              </div>
+                            </div>
+                          @endforeach
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,10 +60,10 @@
                 Добавление маркера
             </div>
             <div class="panel-body">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div id="map-canvas"></div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <form action="{{ route('add_marker') }}" method="post" class="form" role="form">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -49,7 +75,7 @@
                             <label for="title">Аддрес</label>
                             <input type="hidden" id="searchmap" class="form-control">
                         </div>
-                        <p class="text-warning">Перетащите маркер на карте в нужное место.</p>
+                        <p class="text-danger">Перетащите маркер на карте в нужное место.</p>
                         <input type="hidden" id="lat" name="lat" class="form-control" readonly>
                         <input type="hidden" id="lng" name="lng" class="form-control" readonly>
                         <div class="form-group">
@@ -94,7 +120,71 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
+
+$.getScript("//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru",
+    function (data, textStatus, jqxhr) {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 49.4840397, lng: 31.1389815},
+            zoom: 6
+        });
+
+        var beaches = [
+          @foreach ($markers as $marker)
+            ['{{ $marker->id }}', '{{ $marker->inner_title }}', {{ $marker->lat }}, {{ $marker->lng }}, '{!! $marker->content !!}'],
+          @endforeach
+    ];
+
+       var markersArray = [];
+
+       var image = {
+           url: '/images/map.png'
+       };
+
+       var infoPopup = new google.maps.InfoWindow();
+
+       for (var i = 0; i < beaches.length; i++) {
+           var store = beaches[i];
+
+           var marker = new google.maps.Marker({
+               position: {lat: store[2], lng: store[3]},
+               map: map,
+               icon: image,
+               store_id: store[0],
+               title: store[1],
+               content: store[4]
+           });
+
+           markersArray[store[0]] = marker;
+
+           marker.addListener('click', function () {
+               setAndOpenStore(this.store_id);
+           });
+       }
+
+       function setAndOpenStore(id_store) {
+
+           var _marker = markersArray[id_store];
+           map.setZoom(Number(12));
+           map.panTo(_marker.getPosition());
+           infoPopup.close();
+           infoPopup.setContent(_marker.content);
+           infoPopup.open(map, _marker);
+
+       }
+
+       $(".map-link").on("click", function () {
+           setAndOpenStore($(this).data("id"));
+           return false;
+       });
+   });
+
+  /*https://viridis.ua/ru/internet-pharmacy/*/
+</script>
+
+
+{{-- <script type="text/javascript">
 // ========== Отображение маркеров ============    
 
     var map = new google.maps.Map(document.getElementById('map'),{
@@ -125,7 +215,7 @@
 
     }
 
-</script>
+</script> --}}
 
 {{-- <script type="text/javascript">
 // ========== Отображение маркеров ============    
