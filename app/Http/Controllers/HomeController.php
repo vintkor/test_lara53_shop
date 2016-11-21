@@ -26,5 +26,6 @@ class HomeController extends Controller
     {
         $data = DB::table('markers')->get();
         return view('home', ['markers' => $data]);
+        // return view('test');
     }
 }

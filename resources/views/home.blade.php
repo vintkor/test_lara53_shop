@@ -2,7 +2,9 @@
 
 
 @section('content')
-    
+    @push('scripts')
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru"></script>
+    @endpush
     <style type="text/css">
         html, body { height: 100%; margin: 0; padding: 0; }
         #map-canvas { height: 710px }
@@ -41,14 +43,18 @@
                 }
 
                 $unique = array_unique($city);
+                $new_unique = [];
+                foreach ($unique as $key => $value) {
+                  $new_unique[] = $value;
+                }
 
                 $count = 0;
             @endphp
 
-            @for($i = 0; $i < count($unique); $i++)
+            @for($i = 0; $i < count($new_unique); $i++)
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a class="accordion-toggle" data-toggle="collapse" href="#collapse-{{ $count }}" aria-expanded="true">{{ $unique[$i] }}</a>
+                  <a class="accordion-toggle" data-toggle="collapse" href="#collapse-{{ $count }}" aria-expanded="true">{{ $new_unique[$i] }}</a>
                 </h4>
               </div>
               <div id="collapse-{{ $count }}" class="panel-collapse collapse" aria-expanded="true">
@@ -56,7 +62,7 @@
                       <div class="row">
                           <div class="col-md-12">
                               @for($j=0; $j < count($test); $j++)
-                                  @if($test[$j][0] == $unique[$i])
+                                  @if($test[$j][0] == $new_unique[$i])
                                     <ul>
                                       <li><a href="#" data-id="{{ $test[$j][2] }}" class="map-link">{{ $test[$j][1] }}</a></li>
                                     </ul>
@@ -85,8 +91,8 @@
 
 <script>
 
-$.getScript("//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru",
-    function (data, textStatus, jqxhr) {
+// $.getScript("//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru",
+//     function (data, textStatus, jqxhr) {
 
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 49.4840397, lng: 31.1389815},
@@ -95,12 +101,7 @@ $.getScript("//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzN
 
         var beaches = [
           @foreach ($markers as $marker)
-            ['{{ $marker->id }}',
-              '{{ $marker->inner_title }}',
-              {{ $marker->lat }},
-              {{ $marker->lng }},
-              '{!! $marker->content !!}',
-              '{{ $marker->city }}'],
+            ['{{ $marker->id }}','{{ $marker->inner_title }}',{{ $marker->lat }},{{ $marker->lng }},'{!! $marker->content !!}','{{ $marker->city }}'],
           @endforeach
     ];
 
@@ -146,9 +147,8 @@ $.getScript("//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzN
            setAndOpenStore($(this).data("id"));
            return false;
        });
-   });
+   // });
 
-  /*https://viridis.ua/ru/internet-pharmacy/*/
 </script>
 
 @endsection

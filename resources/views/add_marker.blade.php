@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
-<style type="text/css">
-    html, body { height: 100%; margin: 0; padding: 0; }
-    #map-canvas { height: 710px }
-</style>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&libraries=places" async defer></script>
+@push('scripts')
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru"></script>
+    <style type="text/css">
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #map-canvas { height: 710px }
+    </style>
+    @endpush
 
 @section('content')
     <div class="container">
