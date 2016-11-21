@@ -7,8 +7,22 @@ use DB;
 
 class MarkerController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function add_new_marker()
+    {
+        return view('add_marker');
+    }
+
     public function add_marker(Request $request)
     {
+
+        // dd($request);
+
     	$content = '<div id="content"><div id="siteNotice"></div><h1 id="firstHeading" class="firstHeading">'
             . $request->title 
             . '</h1><div id="bodyContent"><p><i class="fa fa-phone" aria-hidden="true"></i> '
@@ -36,7 +50,7 @@ class MarkerController extends Controller
     		'lat' => $request->lat,
     		'lng' => $request->lng,
     		'city' => $request->city,
-    		'inner_title' => $request->inner_title,
+    		'inner_title' => $request->searchmap,
     		'icon' => $icon,
     		'content' => $content
     	]);

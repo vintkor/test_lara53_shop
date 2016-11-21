@@ -30,5 +30,6 @@ Route::delete('/delete_news/{id}', ['as' => 'delete_news', 'uses' => 'NewsContro
 
 /*================= Новости ===============*/
 
-Route::post('/add_marker', ['as' => 'add_marker', 'uses' => 'MarkerController@add_marker']);
+Route::post('/add_marker', ['as' => 'add_marker', 		'uses' => 'MarkerController@add_marker']);
+Route::get('/add_marker',  ['as' => 'add_new_marker',   'uses' => 'MarkerController@add_new_marker']);
 
