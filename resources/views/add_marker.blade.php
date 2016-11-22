@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC6M9R7qu0PEnSqR-J0rBUzNPyUri_h3q8&language=ru&libraries=places"></script>
     <style type="text/css">
         html, body { height: 100%; margin: 0; padding: 0; }
         #map-canvas { height: 710px }
@@ -81,54 +81,56 @@
 <script type="text/javascript">
 // ========== Добавление маркера ============
 
-$('#lat').val(50.42497789999999);
-$('#lng').val(30.459857599999964);
 
-var map = new google.maps.Map(document.getElementById('map-canvas'),{
-    center: {
-        lat: 50.42497789999999,
-        lng: 30.459857599999964
-    },
-    zoom: 6
-});
 
-var marker = new google.maps.Marker({
-    position: {
-        lat: 50.42497789999999,
-        lng: 30.459857599999964
-    },
-    map: map,
-    draggable: true,
-    icon: '/images/map.png'
-});
+    $('#lat').val(50.42497789999999);
+    $('#lng').val(30.459857599999964);
 
-var searchBox = new google.maps.places.SearchBox(document.getElementById('searchmap'));
+    var map = new google.maps.Map(document.getElementById('map-canvas'),{
+        center: {
+            lat: 50.42497789999999,
+            lng: 30.459857599999964
+        },
+        zoom: 6
+    });
 
-google.maps.event.addListener(searchBox, 'places_changed', function(){
+    var marker = new google.maps.Marker({
+        position: {
+            lat: 50.42497789999999,
+            lng: 30.459857599999964
+        },
+        map: map,
+        draggable: true,
+        icon: '/images/map.png'
+    });
 
-    var places = searchBox.getPlaces();
-    var bounds = new google.maps.LatLngBounds();
-    var i, place;
+    var searchBox = new google.maps.places.SearchBox(document.getElementById('searchmap'));
 
-    for(i=0; place = places[i]; i++){
-        bounds.extend(place.geometry.location);
-        marker.setPosition(place.geometry.location);
-    }
+    google.maps.event.addListener(searchBox, 'places_changed', function(){
 
-    map.fitBounds(bounds);
-    map.setZoom(17);
+        var places = searchBox.getPlaces();
+        var bounds = new google.maps.LatLngBounds();
+        var i, place;
 
-});
+        for(i=0; place = places[i]; i++){
+            bounds.extend(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+        }
 
-google.maps.event.addListener(marker, 'position_changed', function(){
+        map.fitBounds(bounds);
+        map.setZoom(17);
 
-    var lat = marker.getPosition().lat();
-    var lng = marker.getPosition().lng();
+    });
 
-    $('#lat').val(lat);
-    $('#lng').val(lng);
+    google.maps.event.addListener(marker, 'position_changed', function(){
 
-});
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+
+        $('#lat').val(lat);
+        $('#lng').val(lng);
+
+    });
 
 </script>
 
